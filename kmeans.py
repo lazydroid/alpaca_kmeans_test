@@ -27,18 +27,24 @@ def fit( P, n_clusters = 8, max_iteration = 300, tolerance = 0.0001 ) :
 
 			labels.append( argmin( dist_squared ))
 
+		print labels
+
 		error = 0
 		for k in range(n_clusters) :
-			if labels.count(k) == 0 : break
+			print 'count', k, labels.count(k)
+			if labels.count(k) == 0 : continue
 
 			center_x = sum(P[i][0] for i in labels if i == k) / labels.count(k)
 			center_y = sum(P[i][1] for i in labels if i == k) / labels.count(k)
 
-			error += abs(center_x - clusters[0])
-			error += abs(center_y - clusters[1])
+			print 'center', center_x, center_y
+
+			error += abs(center_x - clusters[k][0])
+			error += abs(center_y - clusters[k][1])
 
 			clusters[k] = (center_x, center_y)
 
+		print 'error', error, clusters
 		if error < tolerance : break
 
 	return labels, clusters
@@ -48,6 +54,10 @@ if __name__ == '__main__' :
 
 	labels, clusters = fit( test_set )
 
+	print labels
+	print clusters
+	
+
 	# cluster colors
 	clrs = ['#1f77b4', '#aec7e8', '#ff7f0e', '#ffbb78', '#2ca02c',
 		'#98df8a', '#d62728', '#ff9896', '#9467bd', '#c5b0d5',
@@ -56,7 +66,7 @@ if __name__ == '__main__' :
 
 	fig, ax = plt.subplots(1, 1, figsize=(14, 12), facecolor='white')
 
-	plt.scatter( [i[0] for i in test_set], [i[1] for i in test_set], c=[clrs[i%len(clrs)] for i in labels], s=3, alpha=0.5 )
+	plt.scatter( [i[0] for i in test_set], [i[1] for i in test_set], c=[clrs[i%len(clrs)] for i in labels], s=40, alpha=0.8 )
 
 	#plt.title( pair_name, fontsize=18, ha='center')
 

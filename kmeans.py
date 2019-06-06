@@ -34,6 +34,8 @@ def fit( P, n_clusters = 8, max_iteration = 300, tolerance = 0.0001 ) :
 			print 'count', k, labels.count(k)
 			if labels.count(k) == 0 : continue
 
+			print 'seq.len', len(P[i][0] for i in labels if i == k), labels.count(k)
+
 			center_x = sum(P[i][0] for i in labels if i == k) / labels.count(k)
 			center_y = sum(P[i][1] for i in labels if i == k) / labels.count(k)
 
@@ -66,9 +68,9 @@ if __name__ == '__main__' :
 
 	fig, ax = plt.subplots(1, 1, figsize=(14, 12), facecolor='white')
 
-	plt.scatter( [i[0] for i in test_set], [i[1] for i in test_set], c=[clrs[i%len(clrs)] for i in labels], s=40, alpha=0.8 )
+	plt.scatter( [i[0] for i in test_set], [i[1] for i in test_set], c=[clrs[i%len(clrs)] for i in labels], s=40)	#, alpha=0.8 )
 
-	#plt.title( pair_name, fontsize=18, ha='center')
+	plt.scatter( [i[0] for i in clusters], [i[1] for i in clusters], marker='*', c=[clrs[i%len(clrs)] for i in labels], s=150)
 
 	fig.tight_layout()
 

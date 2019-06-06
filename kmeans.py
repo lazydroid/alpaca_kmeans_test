@@ -18,7 +18,10 @@ def fit( P, n_clusters = 8, max_iteration = 300, tolerance = 0.0001 ) :
 	'''
 
 	# init cluster centers
-	clusters = [(i,i) for i in range(n_clusters)]
+	x = [i[0] for i in P]
+	y = [i[1] for i in P]
+	#clusters = [(random.randint(min(x),max(x)),random.randint(min(y),max(y))) for i in range(n_clusters)]
+	clusters = [P[random.randint(0,len(P)-1)] for i in range(n_clusters)]
 
 	# rearrange points in the clusters
 	for _ in range(max_iteration) :
@@ -28,7 +31,7 @@ def fit( P, n_clusters = 8, max_iteration = 300, tolerance = 0.0001 ) :
 
 			labels.append( argmin( dist_squared ))	# assign to the closest cluster
 
-		# now move the clusters to the new positions
+		# now move the clusters centers to the new positions
 		error = 0
 		for k in range(n_clusters) :
 			if labels.count(k) == 0 : continue
@@ -64,11 +67,11 @@ if __name__ == '__main__' :
 	# make a single large picture
 	fig, ax = plt.subplots(1, 1, figsize=(14, 12), facecolor='white')
 
-	# draw the colored points
-	plt.scatter( [i[0] for i in test_set], [i[1] for i in test_set], c=[clrs[i%len(clrs)] for i in labels], s=40)	#, alpha=0.8 )
-
 	# draw the centroids
 	plt.scatter( [i[0] for i in clusters], [i[1] for i in clusters], marker='D', c=[clrs[i%len(clrs)] for i in range(len(clusters))], s=150)
+
+	# draw the colored points
+	plt.scatter( [i[0] for i in test_set], [i[1] for i in test_set], c=[clrs[i%len(clrs)] for i in labels], s=40)	#, alpha=0.8 )
 
 	# remove white frame around the picture
 	fig.tight_layout()

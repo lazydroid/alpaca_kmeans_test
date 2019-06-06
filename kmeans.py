@@ -17,10 +17,7 @@ def fit( P, n_clusters = 8, max_iteration = 300, tolerance = 0.0001 ) :
 	tolerance -- unless the error becomes less than this
 	'''
 
-	# init cluster centers
-	x = [i[0] for i in P]
-	y = [i[1] for i in P]
-	#clusters = [(random.randint(min(x),max(x)),random.randint(min(y),max(y))) for i in range(n_clusters)]
+	# init cluster centers using random points
 	clusters = [P[random.randint(0,len(P)-1)] for i in range(n_clusters)]
 
 	# rearrange points in the clusters

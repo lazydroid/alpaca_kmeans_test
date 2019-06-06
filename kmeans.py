@@ -29,6 +29,8 @@ def fit( P, n_clusters = 8, max_iteration = 300, tolerance = 0.0001 ) :
 
 		error = 0
 		for k in range(n_clusters) :
+			if labels.count(k) == 0 : break
+
 			center_x = sum(P[i][0] for i in labels if i == k) / labels.count(k)
 			center_y = sum(P[i][1] for i in labels if i == k) / labels.count(k)
 
@@ -45,3 +47,5 @@ if __name__ == '__main__' :
 	test_set = [(random.randint(1,100), random.randint(1,100)) for _ in range(100)]
 
 	labels = fit( test_set )
+
+

@@ -31,22 +31,18 @@ def fit( P, n_clusters = 8, max_iteration = 300, tolerance = 0.0001 ) :
 
 		error = 0
 		for k in range(n_clusters) :
-			print 'count', k, labels.count(k)
+			#print 'count', k, labels.count(k)
 			if labels.count(k) == 0 : continue
 
-			print 'seq.len', len(P[i][0] for i in labels if i == k), labels.count(k)
-
-			center_x = sum(P[i][0] for i in labels if i == k) / labels.count(k)
-			center_y = sum(P[i][1] for i in labels if i == k) / labels.count(k)
-
-			print 'center', center_x, center_y
+			center_x = sum(a[0] for a,b in zip(P, labels) if b == k) / labels.count(k)
+			center_y = sum(a[1] for a,b in zip(P, labels) if b == k) / labels.count(k)
 
 			error += abs(center_x - clusters[k][0])
 			error += abs(center_y - clusters[k][1])
 
 			clusters[k] = (center_x, center_y)
 
-		print 'error', error, clusters
+		#print 'error', error, clusters
 		if error < tolerance : break
 
 	return labels, clusters
@@ -70,7 +66,7 @@ if __name__ == '__main__' :
 
 	plt.scatter( [i[0] for i in test_set], [i[1] for i in test_set], c=[clrs[i%len(clrs)] for i in labels], s=40)	#, alpha=0.8 )
 
-	plt.scatter( [i[0] for i in clusters], [i[1] for i in clusters], marker='*', c=[clrs[i%len(clrs)] for i in labels], s=150)
+	plt.scatter( [i[0] for i in clusters], [i[1] for i in clusters], marker='D', c=[clrs[i%len(clrs)] for i in range(len(clusters))], s=150)
 
 	fig.tight_layout()
 
